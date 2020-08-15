@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CovidClassroom.Core\CovidClassroom.Core.csproj" />
+  </ItemGroup>
+
 </Project>

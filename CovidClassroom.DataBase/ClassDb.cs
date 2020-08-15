@@ -45,6 +45,7 @@ namespace CovidClassroom.DataBase
             {
                 legacyClassroom.students = updatedClassroom.students;
             }
+            return legacyClassroom;
         }
     }
 }
