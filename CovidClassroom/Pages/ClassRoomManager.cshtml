@@ -1,0 +1,16 @@
+﻿@page
+@model CovidClassroom.ClassRoomManagerModel
+@{
+    ViewData["Title"] = "ClassRoomManager";
+}
+
+    <div class="text-center">
+        <h1>Your Classes</h1>
+    </div>
+@if (Model.isTeacher)
+{
+    <div class="text-center">
+        <h4 class="text-muted">Create new curriculum for your students:</h4>
+    </div>
+
+}

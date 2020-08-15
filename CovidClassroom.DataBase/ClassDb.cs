@@ -1,4 +1,5 @@
 ﻿using CovidClassroom.Core;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,18 @@ namespace CovidClassroom.DataBase
         {
             classrooms.Remove(classroom);
             return classroom;
+        }
+
+        public List<Classroom> getAllByStudent(IdentityUser student)
+        {
+            List<Classroom> classroomsWithStudent = classrooms.Where(r => r.students.FirstOrDefault(f => f.baseUser.Email == student.Email) != null).ToList();
+            return classroomsWithStudent;
+        }
+
+        public List<Classroom> getAllByTeacher(IdentityUser teacher)
+        {
+            List<Classroom> classroomsWithTeacher = classrooms.Where(r => r.owner.Email == teacher.Email).ToList();
+            return classroomsWithTeacher;
         }
 
         public Classroom getByGuid(string Guid)
