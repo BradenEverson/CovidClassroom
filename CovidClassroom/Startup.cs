@@ -12,6 +12,7 @@ using CovidClassroom.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using CovidClassroom.DataBase;
 
 namespace CovidClassroom
 {
@@ -33,6 +34,9 @@ namespace CovidClassroom
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
+            services.AddSingleton<IClassRoomData,ClassDb>();
+            services.AddSingleton<ITeacherData, TeacherDb>();
+            services.AddSingleton<IStudentData, StudentDb>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
