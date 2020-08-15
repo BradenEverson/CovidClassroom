@@ -37,6 +37,7 @@ namespace CovidClassroom
             services.AddSingleton<IClassRoomData,ClassDb>();
             services.AddSingleton<ITeacherData, TeacherDb>();
             services.AddSingleton<IStudentData, StudentDb>();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +66,7 @@ namespace CovidClassroom
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapHub<ClassHub>("ClassHub");
             });
         }
     }

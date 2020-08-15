@@ -9,14 +9,16 @@ namespace CovidClassroom.Core
 {
     public class Classroom
     {
-        public Classroom(Teacher owner, string url)
+        public Classroom(Teacher owner, string url, string name, string guid)
         {
-            this.classroomId = Guid.NewGuid().ToString().Split('-')[0];
+            this.classroomId = guid;
             this.cardset = scrapeQuizlet(url);
             this.owner = owner.baseUser;
             this.students = owner.classRoom;
+            this.className = name;
         }
         public string classroomId { get; }
+        public string className { get; set; }
         public IdentityUser owner { get; }
         public List<Student> students { get; set; }
         public List<flashCard> cardset { get; set; }
@@ -24,16 +26,9 @@ namespace CovidClassroom.Core
         {
             List<flashCard> cards = new List<flashCard>();
             var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "CovidClassroom");
             var html = httpClient.GetStringAsync(url);
             var htmlDocument = new HtmlAgilityPack.HtmlDocument();
-            htmlDocument.LoadHtml(html.Result);
-            var quizletsList = htmlDocument.DocumentNode.Descendants("div")
-                .Where(node => node.GetAttributeValue("class", "")
-                .Contains("UILinkBox-link")).ToList();
-            String setUrl = quizletsList[0].InnerHtml.Split('"')[5];
-            httpClient = new HttpClient();
-            html = httpClient.GetStringAsync(setUrl);
-            htmlDocument = new HtmlAgilityPack.HtmlDocument();
             htmlDocument.LoadHtml(html.Result);
             var setsList = htmlDocument.DocumentNode.Descendants("div")
                 .Where(node => node.GetAttributeValue("class", "")

@@ -1,0 +1,24 @@
+﻿@page
+@model CovidClassroom.CreateClassModel
+@{
+    ViewData["Title"] = "CreateClass";
+}
+    <div class="text-center">
+        <h1>Create a new class</h1>
+    </div>
+    <div class="form-group">
+        <div>
+            <input type="search" placeholder="Name your class" asp-for="name" style="margin-top:2%;margin-bottom:3%" value="@Model.name"/>
+            <br/>
+            <input type="search" placeholder="Quizlet link to your class materials" asp-for="url" style="margin-top:2%;margin-bottom:3%" />
+                <div id="searchbar" class="input-group">
+                    <input id="email" type="search" placeholder="Search a studnet's email" asp-for="studentEmail" style="width:75%; margin-top:3%;"/>
+                    <button onclick="SendCLientInfo('@Model.customGuid', document.getElementById('email').value)" class="btn input-group-sm btn-light" id="search" style="margin-top:3%">Find And Add To Class</button>
+                </div>
+            <form method="post">
+                <button type="submit" class="btn input-group-prepend btn-outline-success">Submit the new class</button>
+            </form>
+        </div>
+    </div>
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/emailHub.js"></script>

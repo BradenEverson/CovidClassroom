@@ -9,12 +9,34 @@ namespace CovidClassroom.DataBase
 {
     public class ClassDb : IClassRoomData
     {
+        private readonly Dictionary<string, List<Student>> idStudentPairs;
+
         private readonly List<Classroom> classrooms;
         public ClassDb()
         {
             classrooms = new List<Classroom>();
+            idStudentPairs = new Dictionary<string, List<Student>>();
         }
-
+        public void addKeyValPair(string id, List<Student> students)
+        {
+            idStudentPairs.Add(id, students);
+        }
+        public void addStudentToKey(string id, Student student)
+        {
+            List<Student> students;
+            if(idStudentPairs.TryGetValue(id,out students))
+            {
+                idStudentPairs[id].Add(student);
+            }
+            else
+            {
+                idStudentPairs.Add(id, new List<Student>() { student });
+            }
+        }
+        public List<Student> getStudents(string id)
+        {
+            return idStudentPairs[id];
+        }
         public Classroom add(Classroom classroom)
         {
             classrooms.Add(classroom);
