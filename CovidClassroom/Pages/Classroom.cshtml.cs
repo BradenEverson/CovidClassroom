@@ -34,7 +34,7 @@ namespace CovidClassroom
             {
                 return RedirectToPage("./index");
             }
-            else if (currentClass.students.FirstOrDefault(r => r.baseUser.Email == currentUser.Email) == null)
+            else if (currentClass.students.FirstOrDefault(r => r.Email == currentUser.Email) == null)
             {
                 return RedirectToPage("./index");
             }

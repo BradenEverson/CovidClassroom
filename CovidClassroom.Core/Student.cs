@@ -7,12 +7,13 @@ namespace CovidClassroom.Core
 {
     public class Student
     {
-        public Student(IdentityUser baseUser)
+        public Student(string Email,IdentityUser baseUser = null)
         {
-            this.baseUser = baseUser;
             this.hourCounter = 0;
+            this.Email = Email;
         }
         public IdentityUser baseUser { get; set; }
+        public string Email { get; set; }
         public int hourCounter { get; set; }
     }
 }

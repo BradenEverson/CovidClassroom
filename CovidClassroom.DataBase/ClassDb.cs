@@ -14,7 +14,13 @@ namespace CovidClassroom.DataBase
         private readonly List<Classroom> classrooms;
         public ClassDb()
         {
-            classrooms = new List<Classroom>();
+            classrooms = new List<Classroom>()
+            {
+                new Classroom("bradeneverson@gmail.com","https://quizlet.com/485557168/vocabulaire-fr2-5-la-science-et-la-technologie-les-inventeursscientifiques-flash-cards/","French Term 1","65fd2c62",new List<Student>()
+                {
+                    new Student("Braden@gmail.com")
+                })
+            };
             idStudentPairs = new Dictionary<string, List<Student>>();
         }
         public void addKeyValPair(string id, List<Student> students)
@@ -35,7 +41,7 @@ namespace CovidClassroom.DataBase
         }
         public List<Student> getStudents(string id)
         {
-            return idStudentPairs[id];
+            return (idStudentPairs.TryGetValue(id, out List<Student> throwaway)) ? idStudentPairs[id] : null;
         }
         public Classroom add(Classroom classroom)
         {
@@ -56,13 +62,13 @@ namespace CovidClassroom.DataBase
 
         public List<Classroom> getAllByStudent(IdentityUser student)
         {
-            List<Classroom> classroomsWithStudent = classrooms.Where(r => r.students.FirstOrDefault(f => f.baseUser.Email == student.Email) != null).ToList();
+            List<Classroom> classroomsWithStudent = classrooms.Where(r => r.students.FirstOrDefault(f => f.Email == student.Email) != null).ToList();
             return classroomsWithStudent;
         }
 
         public List<Classroom> getAllByTeacher(IdentityUser teacher)
         {
-            List<Classroom> classroomsWithTeacher = classrooms.Where(r => r.owner.Email == teacher.Email).ToList();
+            List<Classroom> classroomsWithTeacher = classrooms.Where(r => r.ownerEmail == teacher.Email).ToList();
             return classroomsWithTeacher;
         }
 

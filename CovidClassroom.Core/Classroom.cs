@@ -9,14 +9,15 @@ namespace CovidClassroom.Core
 {
     public class Classroom
     {
-        public Classroom(Teacher owner, string url, string name, string guid)
+        public Classroom(string owner, string url, string name, string guid, List<Student> students)
         {
             this.classroomId = guid;
             this.cardset = scrapeQuizlet(url);
-            this.owner = owner.baseUser;
-            this.students = owner.classRoom;
+            this.students = students;
             this.className = name;
+            this.ownerEmail = owner;
         }
+        public string ownerEmail { get; }
         public string classroomId { get; }
         public string className { get; set; }
         public IdentityUser owner { get; }

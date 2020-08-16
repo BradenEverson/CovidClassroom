@@ -33,13 +33,13 @@ namespace CovidClassroom.DataBase
 
         public Teacher getByIdentityUser(IdentityUser user)
         {
-            Teacher receivedTeacher = Teachers.FirstOrDefault(r => r.baseUser.Email == user.Email);
+            Teacher receivedTeacher = Teachers.FirstOrDefault(r => r.Email == user.Email);
             return receivedTeacher;
         }
 
         public Teacher update(Teacher newTeacher)
         {
-            Teacher legacyTeacher = Teachers.FirstOrDefault(r => r.baseUser.Email == newTeacher.baseUser.Email);
+            Teacher legacyTeacher = Teachers.FirstOrDefault(r => r.Email == newTeacher.Email);
             if (legacyTeacher != null)
             {
                 legacyTeacher.classRoom = newTeacher.classRoom;

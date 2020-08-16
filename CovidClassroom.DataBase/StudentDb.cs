@@ -33,13 +33,13 @@ namespace CovidClassroom.DataBase
 
         public Student getByIdentityUser(IdentityUser user)
         {
-            Student receivedStudent = students.FirstOrDefault(r => r.baseUser.Email == user.Email);
+            Student receivedStudent = students.FirstOrDefault(r => r.Email == user.Email);
             return receivedStudent;
         }
 
         public Student update(Student newStudent)
         {
-            Student legacyStudent = students.FirstOrDefault(r => r.baseUser.Email == newStudent.baseUser.Email);
+            Student legacyStudent = students.FirstOrDefault(r => r.Email == newStudent.Email);
             if(legacyStudent != null)
             {
                 legacyStudent.hourCounter = newStudent.hourCounter;

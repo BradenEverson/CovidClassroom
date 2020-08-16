@@ -87,12 +87,12 @@ namespace CovidClassroom.Areas.Identity.Pages.Account
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
                 if(role == "Student")
                 {
-                    students.add(new Student(user));
+                    students.add(new Student(Input.Email,user));
                     Console.WriteLine("New student " + user.Email + " added");
                 }
                 else if(role == "Teacher")
                 {
-                    teachers.add(new Teacher(user));
+                    teachers.add(new Teacher(user,Input.Email));
                     Console.WriteLine("New teacher " + user.Email + " added");
                 }
                 var result = await _userManager.CreateAsync(user, Input.Password);

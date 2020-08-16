@@ -26,6 +26,7 @@ namespace CovidClassroom
         public IdentityUser currentUser = new IdentityUser();
         public List<Student> studentsList = new List<Student>();
         public string customGuid;
+        public Teacher currentTeacher;
         public CreateClassModel(ApplicationDbContext db, IStudentData students, ITeacherData teachers, IClassRoomData classes)
         {
             this.db = db;
@@ -41,13 +42,17 @@ namespace CovidClassroom
             {
                 return RedirectToPage("./index");
             }
+            else
+            {
+                currentTeacher = new Teacher(currentUser,currentUser.Email);
+            }
             return Page();
         }
         public IActionResult OnPost()
         {
             Console.WriteLine("Url: " + url);
-            Classroom newClass = new Classroom(teachers.getByIdentityUser(currentUser), url, name, customGuid);
-            newClass.students = classes.getStudents(customGuid);
+            Console.WriteLine(currentTeacher);
+            Classroom newClass = new Classroom(currentUser.Email, url, name, customGuid, classes.getStudents(customGuid));
             classes.add(newClass);
             return RedirectToPage("./ClassRoomManager");
         }
