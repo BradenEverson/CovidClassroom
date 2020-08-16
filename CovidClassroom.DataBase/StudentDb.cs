@@ -19,7 +19,10 @@ namespace CovidClassroom.DataBase
             students.Add(Student);
             return Student;
         }
-
+        public void swap(Student student)
+        {
+            students.FirstOrDefault(r => r.Email == student.Email).enabled = !students.FirstOrDefault(r => r.Email == student.Email).enabled;
+        }
         public int commit()
         {
             return 0;
@@ -36,7 +39,11 @@ namespace CovidClassroom.DataBase
             Student receivedStudent = students.FirstOrDefault(r => r.Email == user.Email);
             return receivedStudent;
         }
-
+        public Student getByEmail(string email)
+        {
+            Student receivedStudent = students.FirstOrDefault(r => r.Email == email);
+            return receivedStudent;
+        }
         public Student update(Student newStudent)
         {
             Student legacyStudent = students.FirstOrDefault(r => r.Email == newStudent.Email);

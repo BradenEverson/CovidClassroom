@@ -13,5 +13,7 @@ namespace CovidClassroom.DataBase
         public Student update(Student newStudent);
         public Student getByIdentityUser(IdentityUser user);
         public int commit();
+        public void swap(Student student);
+        public Student getByEmail(string email);
     }
 }
