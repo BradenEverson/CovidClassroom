@@ -9,12 +9,9 @@ namespace CovidClassroom.Core
     {
         public Teacher(IdentityUser baseUser, string Email)
         {
-            this.baseUser = new IdentityUser()
-            {
-                Email = baseUser.Email
-            };
             this.classRoom = new List<Student>();
             this.Email = Email;
+            Console.WriteLine("Teacher email: " + Email);
         }
         public IdentityUser baseUser { get; set; }
         public List<Student> classRoom { get; set; }

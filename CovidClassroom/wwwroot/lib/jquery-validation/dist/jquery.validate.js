@@ -525,8 +525,8 @@ $.extend( $.validator, {
 					};
 				} );
 
-				// Remove items from success list
-				this.successList = $.grep( this.successList, function( element ) {
+				// Remove items from danger list
+				this.dangerList = $.grep( this.dangerList, function( element ) {
 					return !( element.name in errors );
 				} );
 			}
@@ -669,7 +669,7 @@ $.extend( $.validator, {
 		},
 
 		resetInternals: function() {
-			this.successList = [];
+			this.dangerList = [];
 			this.errorList = [];
 			this.errorMap = {};
 			this.toShow = $( [] );
@@ -808,7 +808,7 @@ $.extend( $.validator, {
 				return;
 			}
 			if ( this.objectLength( rules ) ) {
-				this.successList.push( element );
+				this.dangerList.push( element );
 			}
 			return true;
 		},
@@ -902,9 +902,9 @@ $.extend( $.validator, {
 			if ( this.errorList.length ) {
 				this.toShow = this.toShow.add( this.containers );
 			}
-			if ( this.settings.success ) {
-				for ( i = 0; this.successList[ i ]; i++ ) {
-					this.showLabel( this.successList[ i ] );
+			if ( this.settings.danger ) {
+				for ( i = 0; this.dangerList[ i ]; i++ ) {
+					this.showLabel( this.dangerList[ i ] );
 				}
 			}
 			if ( this.settings.unhighlight ) {
@@ -935,7 +935,7 @@ $.extend( $.validator, {
 
 			if ( error.length ) {
 
-				// Refresh error/success class
+				// Refresh error/danger class
 				error.removeClass( this.settings.validClass ).addClass( this.settings.errorClass );
 
 				// Replace message on existing label
@@ -998,12 +998,12 @@ $.extend( $.validator, {
 					}
 				}
 			}
-			if ( !message && this.settings.success ) {
+			if ( !message && this.settings.danger ) {
 				error.text( "" );
-				if ( typeof this.settings.success === "string" ) {
-					error.addClass( this.settings.success );
+				if ( typeof this.settings.danger === "string" ) {
+					error.addClass( this.settings.danger );
 				} else {
-					this.settings.success( error, element );
+					this.settings.danger( error, element );
 				}
 			}
 			this.toShow = this.toShow.add( error );
@@ -1532,7 +1532,7 @@ $.extend( $.validator, {
 				dataType: "json",
 				data: data,
 				context: validator.currentForm,
-				success: function( response ) {
+				danger: function( response ) {
 					var valid = response === true || response === "true",
 						errors, message, submitted;
 
@@ -1542,7 +1542,7 @@ $.extend( $.validator, {
 						validator.resetInternals();
 						validator.toHide = validator.errorsFor( element );
 						validator.formSubmitted = submitted;
-						validator.successList.push( element );
+						validator.dangerList.push( element );
 						validator.invalid[ element.name ] = false;
 						validator.showErrors();
 					} else {

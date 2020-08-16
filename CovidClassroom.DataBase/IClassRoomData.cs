@@ -15,8 +15,9 @@ namespace CovidClassroom.DataBase
         public Classroom delete(Classroom classroom);
         public Classroom update(Classroom updatedClassroom);
         public Classroom getByGuid(string Guid);
-        public List<Classroom> getAllByStudent(IdentityUser student);
-        public List<Classroom> getAllByTeacher(IdentityUser teacher);
+        public List<Classroom> getAllByStudent(string student);
+        public List<Classroom> getAllByTeacher(string teacher);
+        public flashCard nextCard(string guid);
         public int commit();
     }
 }

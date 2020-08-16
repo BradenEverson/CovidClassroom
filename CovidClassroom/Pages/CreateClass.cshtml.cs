@@ -51,9 +51,8 @@ namespace CovidClassroom
         public IActionResult OnPost()
         {
             Console.WriteLine("Url: " + url);
-            Console.WriteLine(currentTeacher);
-            Classroom newClass = new Classroom(currentUser.Email, url, name, customGuid, classes.getStudents(customGuid));
-            classes.add(newClass);
+            Console.WriteLine(User.Identity.Name);
+            classes.add(new Classroom(User.Identity.Name, url, name, customGuid, classes.getStudents(customGuid)));
             return RedirectToPage("./ClassRoomManager");
         }
     }

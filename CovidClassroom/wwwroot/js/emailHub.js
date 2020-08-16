@@ -2,7 +2,7 @@
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/ClassHub").build();
 connection.on("StudentAdded", function (id) {
-
+    document.getElementById("email").value = "";
 });
 
 connection.start().then(function () {

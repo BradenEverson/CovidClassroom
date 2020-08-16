@@ -11,9 +11,12 @@ namespace CovidClassroom.Core
         {
             this.hourCounter = 0;
             this.Email = Email;
+            enabled = false;
+            Console.WriteLine("Student email: " + this.Email);
         }
         public IdentityUser baseUser { get; set; }
         public string Email { get; set; }
         public int hourCounter { get; set; }
+        public bool enabled { get; set; }
     }
 }

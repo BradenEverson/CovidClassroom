@@ -7,3 +7,21 @@
 <div class="text-center">
     <h1>Test your knowledge in the subject, "@Model.currentClass.className"</h1>
 </div>
+<div class="card-group">
+    <div class="card border-danger mb-3" style="align-content:center;width:30%;height:20%">
+        <div class="card-body">
+            <h5 class="card-title" id="title">@Model.currentClass.cardset[0].face1</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><button class="btn btn-sm" id="ans1" onclick="sendAnswer('@Model.currentClass.cardset[Model.index].possibleAnswers[0]','@Model.currentClass.cardset[Model.index].face2', '@Model.currentClass.classroomId', '@Model.User.Identity.Name')">A @Model.currentClass.cardset[Model.index].possibleAnswers[0]</button></li>
+                <li class="list-group-item"><button class="btn btn-sm" id="ans2" onclick="sendAnswer('@Model.currentClass.cardset[Model.index].possibleAnswers[1]','@Model.currentClass.cardset[Model.index].face2', '@Model.currentClass.classroomId', '@Model.User.Identity.Name')">B @Model.currentClass.cardset[Model.index].possibleAnswers[1]</button></li>
+                <li class="list-group-item"><button class="btn btn-sm" id="ans3" onclick="sendAnswer('@Model.currentClass.cardset[Model.index].possibleAnswers[2]','@Model.currentClass.cardset[Model.index].face2', '@Model.currentClass.classroomId', '@Model.User.Identity.Name')">C @Model.currentClass.cardset[Model.index].possibleAnswers[2]</button></li>
+                <li class="list-group-item"><button class="btn btn-sm" id="ans4" onclick="sendAnswer('@Model.currentClass.cardset[Model.index].possibleAnswers[3]','@Model.currentClass.cardset[Model.index].face2', '@Model.currentClass.classroomId', '@Model.User.Identity.Name')">D @Model.currentClass.cardset[Model.index].possibleAnswers[3]</button></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<form method="post">
+    <button  class="btn btn-outline-danger" type ="submit" style="position:absolute;left:10%;bottom:10%;">Redeem my minutes!</button>
+</form>
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/test.js"></script>

@@ -18,6 +18,7 @@ namespace CovidClassroom
         public readonly IStudentData students;
         public readonly ITeacherData teachers;
         public readonly ApplicationDbContext db;
+        public int index = 0;
         public IdentityUser currentUser = new IdentityUser();
         public ClassenvironmentModel(ApplicationDbContext db, IStudentData students, ITeacherData teachers, IClassRoomData classes)
         {
@@ -30,6 +31,17 @@ namespace CovidClassroom
         {
             currentUser = db.Users.FirstOrDefault(r => r.Email == User.Identity.Name);
             currentClass = classes.getByGuid(classId);
+        }
+        public int AddToIndex()
+        {
+            index++;
+            return index;
+        }
+        public IActionResult OnPost()
+        {
+            students.swap(students.getByEmail(User.Identity.Name));
+            return RedirectToPage("./Timer", new {time = students.getTime(User.Identity.Name) });
+            //return RedirectToPage("./StudentApi", new { studentEmail = "Braden@gmail.com" });
         }
     }
 }

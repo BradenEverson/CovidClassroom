@@ -13,19 +13,18 @@
         <h4 class="text-muted">Create new curriculum for your students:</h4>
     </div>
     <div>
-        @for (int i = 0; i <= Model.classes.getAllByTeacher(Model.currentUser).Count(); i += 3)
+        @for (int i = 0; i <= Model.classes.getAllByTeacher(Model.User.Identity.Name).Count(); i += 3)
         {
             <div class="card-group">
                 @for (int f = 0; f < 3; f++)
                 {
-                    @if (!(i + f >= Model.classes.getAllByTeacher(Model.currentUser).Count()))
+                    @if (!(i + f >= Model.classes.getAllByTeacher(Model.User.Identity.Name).Count()))
                     {
-                        <div class="card border-success mb-3" style="width: 24rem">
+                        <div class="card border-danger mb-3" style="width: 24rem">
                             <div class="card-body">
-                                <h5 class="card-title">@Model.classes.getAllByTeacher(Model.currentUser)[i + f].className</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">@Model.classes.getAllByTeacher(Model.currentUser)[i + f].classroomId</h6>
+                                <h5 class="card-title">@Model.classes.getAllByTeacher(Model.User.Identity.Name)[i + f].className</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">@Model.classes.getAllByTeacher(Model.User.Identity.Name)[i + f].classroomId</h6>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">@Model.classes.getAllByTeacher(Model.currentUser)[i + f].students.Count() Students enrolled</li>
                                 </ul>
                             </div>
                         </div>
@@ -37,28 +36,27 @@
                 }
             </div>
         }
-        <a asp-page="CreateClass" class="btn btn-outline-success" style="position:absolute;left:10%;bottom:10%;">Add A Classroom</a>
+        <a asp-page="CreateClass" class="btn btn-outline-danger" style="position:absolute;left:10%;bottom:10%;">Add A Classroom</a>
     </div>
 
 }
 else if (!Model.isTeacher)
 {
 <div>
-    @for (int i = 0; i <= Model.classes.getAllByStudent(Model.currentUser).Count(); i += 3)
+    @for (int i = 0; i <= Model.classes.getAllByStudent(Model.User.Identity.Name).Count(); i += 3)
     {
         <div class="card-group">
             @for (int f = 0; f < 3; f++)
             {
-                @if (!(i + f >= Model.classes.getAllByStudent(Model.currentUser).Count()))
+                @if (!(i + f >= Model.classes.getAllByStudent(Model.User.Identity.Name).Count()))
                 {
-                    <div class="card border-success mb-3" style="width: 24rem">
+                    <div class="card border-danger mb-3" style="width: 24rem">
                         <div class="card-body">
-                            <h5 class="card-title">@Model.classes.getAllByStudent(Model.currentUser)[i + f].className</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">@Model.classes.getAllByStudent(Model.currentUser)[i + f].classroomId</h6>
+                            <h5 class="card-title">@Model.classes.getAllByStudent(Model.User.Identity.Name)[i + f].className</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@Model.classes.getAllByStudent(Model.User.Identity.Name)[i + f].classroomId</h6>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">@Model.classes.getAllByStudent(Model.currentUser)[i + f].students.Count() Students enrolled</li>
                                 <li class="list-group-item">
-                                    <a class="btn btn-outline-success btn-group-sm" asp-page="./Classenvironment" asp-route-classId="@Model.classes.getAllByStudent(Model.currentUser)[i + f].classroomId">Enter class</a>
+                                    <a class="btn btn-outline-danger btn-group-sm" asp-page="./Classenvironment" asp-route-classId="@Model.classes.getAllByStudent(Model.User.Identity.Name)[i + f].classroomId">Enter class</a>
                                 </li>
                             </ul>
                         </div>

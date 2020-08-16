@@ -15,7 +15,20 @@ namespace CovidClassroom.Core
             this.cardset = scrapeQuizlet(url);
             this.students = students;
             this.className = name;
-            this.ownerEmail = owner;
+            this.ownerEmail = owner.Replace(Environment.NewLine,String.Empty);
+            Console.WriteLine("Teacher Email: " + this.ownerEmail);
+            foreach(flashCard card in this.cardset)
+            {
+                card.possibleAnswers.Add(cardset[StaticRandom.Instance.Next(0, cardset.Count() - 1)].face2);
+                Console.WriteLine(card.possibleAnswers[0]);
+                card.possibleAnswers.Add(cardset[StaticRandom.Instance.Next(0, cardset.Count() - 1)].face2);
+                Console.WriteLine(card.possibleAnswers[1]);
+                card.possibleAnswers.Add(cardset[StaticRandom.Instance.Next(0, cardset.Count() - 1)].face2);
+                Console.WriteLine(card.possibleAnswers[2]);
+                card.possibleAnswers.Add(card.face2);
+                Console.WriteLine(card.possibleAnswers[3]);
+                Shuffle(card.possibleAnswers);
+            }
         }
         public string ownerEmail { get; }
         public string classroomId { get; }
@@ -46,6 +59,18 @@ namespace CovidClassroom.Core
                 cards.Add(card);
             }
             return cards;
+        }
+        public void Shuffle(List<string> list)
+        {
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = StaticRandom.Instance.Next(n + 1);
+                string value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
         }
     }
 }

@@ -14,13 +14,7 @@ namespace CovidClassroom.DataBase
         private readonly List<Classroom> classrooms;
         public ClassDb()
         {
-            classrooms = new List<Classroom>()
-            {
-                new Classroom("bradeneverson@gmail.com","https://quizlet.com/485557168/vocabulaire-fr2-5-la-science-et-la-technologie-les-inventeursscientifiques-flash-cards/","French Term 1","65fd2c62",new List<Student>()
-                {
-                    new Student("Braden@gmail.com")
-                })
-            };
+            classrooms = new List<Classroom>();
             idStudentPairs = new Dictionary<string, List<Student>>();
         }
         public void addKeyValPair(string id, List<Student> students)
@@ -46,6 +40,7 @@ namespace CovidClassroom.DataBase
         public Classroom add(Classroom classroom)
         {
             classrooms.Add(classroom);
+            Console.WriteLine("Class created by " + classroom.ownerEmail + "!");
             return classroom;
         }
 
@@ -60,15 +55,15 @@ namespace CovidClassroom.DataBase
             return classroom;
         }
 
-        public List<Classroom> getAllByStudent(IdentityUser student)
+        public List<Classroom> getAllByStudent(string student)
         {
-            List<Classroom> classroomsWithStudent = classrooms.Where(r => r.students.FirstOrDefault(f => f.Email == student.Email) != null).ToList();
+            List<Classroom> classroomsWithStudent = classrooms.Where(r => r.students.FirstOrDefault(f => f.Email.Contains(student.Split('@')[0])) != null).ToList();
             return classroomsWithStudent;
         }
 
-        public List<Classroom> getAllByTeacher(IdentityUser teacher)
+        public List<Classroom> getAllByTeacher(string teacher)
         {
-            List<Classroom> classroomsWithTeacher = classrooms.Where(r => r.ownerEmail == teacher.Email).ToList();
+            List<Classroom> classroomsWithTeacher = classrooms.Where(r => r.ownerEmail.Contains(teacher.Split('@')[0])).ToList();
             return classroomsWithTeacher;
         }
 
@@ -87,6 +82,14 @@ namespace CovidClassroom.DataBase
                 legacyClassroom.students = updatedClassroom.students;
             }
             return legacyClassroom;
+        }
+
+        public flashCard nextCard(string guid)
+        {
+            flashCard tempCard = getByGuid(guid).cardset[0];
+            getByGuid(guid).cardset.Remove(tempCard);
+            getByGuid(guid).cardset.Add(tempCard);
+            return getByGuid(guid).cardset[0];
         }
     }
 }

@@ -12,7 +12,10 @@ namespace CovidClassroom.DataBase
         private readonly List<Student> students;
         public StudentDb()
         {
-            students = new List<Student>();
+            students = new List<Student>()
+            {
+                new Student("Braden@gmail.com")
+            };
         }
         public Student add(Student Student)
         {
@@ -52,6 +55,16 @@ namespace CovidClassroom.DataBase
                 legacyStudent.hourCounter = newStudent.hourCounter;
             }
             return legacyStudent;
+        }
+
+        public void addMinutesToStudent(string student, int amount)
+        {
+            getByEmail(student).hourCounter += amount;
+        }
+
+        public int getTime(string email)
+        {
+            return getByEmail(email).hourCounter;
         }
     }
 }

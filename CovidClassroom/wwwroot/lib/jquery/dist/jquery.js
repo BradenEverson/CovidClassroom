@@ -2553,7 +2553,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 				// Add matches to results
 				push.apply( results, setMatched );
 
-				// Seedless set matches succeeding multiple successful matchers stipulate sorting
+				// Seedless set matches succeeding multiple dangerful matchers stipulate sorting
 				if ( outermost && !seed && setMatched.length > 0 &&
 					( matchedCount + setMatchers.length ) > 1 ) {
 
@@ -8704,7 +8704,7 @@ function ajaxHandleResponses( s, jqXHR, responses ) {
 /* Chain conversions given the request and the original response
  * Also sets the responseXXX fields on the jqXHR instance
  */
-function ajaxConvert( s, response, jqXHR, isSuccess ) {
+function ajaxConvert( s, response, jqXHR, isdanger ) {
 	var conv2, current, conv, tmp, prev,
 		converters = {},
 
@@ -8728,7 +8728,7 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 		}
 
 		// Apply the dataFilter if provided
-		if ( !prev && isSuccess && s.dataFilter ) {
+		if ( !prev && isdanger && s.dataFilter ) {
 			response = s.dataFilter( response, s.dataType );
 		}
 
@@ -8797,7 +8797,7 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 		}
 	}
 
-	return { state: "success", data: response };
+	return { state: "danger", data: response };
 }
 
 jQuery.extend( {
@@ -9172,7 +9172,7 @@ jQuery.extend( {
 
 		// Install callbacks on deferreds
 		completeDeferred.add( s.complete );
-		jqXHR.done( s.success );
+		jqXHR.done( s.danger );
 		jqXHR.fail( s.error );
 
 		// Get transport
@@ -9218,7 +9218,7 @@ jQuery.extend( {
 
 		// Callback for when everything is done
 		function done( status, nativeStatusText, responses, headers ) {
-			var isSuccess, success, error, response, modified,
+			var isdanger, danger, error, response, modified,
 				statusText = nativeStatusText;
 
 			// Ignore repeat invocations
@@ -9243,8 +9243,8 @@ jQuery.extend( {
 			// Set readyState
 			jqXHR.readyState = status > 0 ? 4 : 0;
 
-			// Determine if successful
-			isSuccess = status >= 200 && status < 300 || status === 304;
+			// Determine if dangerful
+			isdanger = status >= 200 && status < 300 || status === 304;
 
 			// Get response data
 			if ( responses ) {
@@ -9252,10 +9252,10 @@ jQuery.extend( {
 			}
 
 			// Convert no matter what (that way responseXXX fields are always set)
-			response = ajaxConvert( s, response, jqXHR, isSuccess );
+			response = ajaxConvert( s, response, jqXHR, isdanger );
 
-			// If successful, handle type chaining
-			if ( isSuccess ) {
+			// If dangerful, handle type chaining
+			if ( isdanger ) {
 
 				// Set the If-Modified-Since and/or If-None-Match header, if in ifModified mode.
 				if ( s.ifModified ) {
@@ -9280,9 +9280,9 @@ jQuery.extend( {
 				// If we have data, let's convert it
 				} else {
 					statusText = response.state;
-					success = response.data;
+					danger = response.data;
 					error = response.error;
-					isSuccess = !error;
+					isdanger = !error;
 				}
 			} else {
 
@@ -9300,9 +9300,9 @@ jQuery.extend( {
 			jqXHR.status = status;
 			jqXHR.statusText = ( nativeStatusText || statusText ) + "";
 
-			// Success/Error
-			if ( isSuccess ) {
-				deferred.resolveWith( callbackContext, [ success, statusText, jqXHR ] );
+			// danger/Error
+			if ( isdanger ) {
+				deferred.resolveWith( callbackContext, [ danger, statusText, jqXHR ] );
 			} else {
 				deferred.rejectWith( callbackContext, [ jqXHR, statusText, error ] );
 			}
@@ -9312,8 +9312,8 @@ jQuery.extend( {
 			statusCode = undefined;
 
 			if ( fireGlobals ) {
-				globalEventContext.trigger( isSuccess ? "ajaxSuccess" : "ajaxError",
-					[ jqXHR, s, isSuccess ? success : error ] );
+				globalEventContext.trigger( isdanger ? "ajaxdanger" : "ajaxError",
+					[ jqXHR, s, isdanger ? danger : error ] );
 			}
 
 			// Complete
@@ -9357,7 +9357,7 @@ jQuery.each( [ "get", "post" ], function( i, method ) {
 			type: method,
 			dataType: type,
 			data: data,
-			success: callback
+			danger: callback
 		}, jQuery.isPlainObject( url ) && url ) );
 	};
 } );
@@ -9461,7 +9461,7 @@ jQuery.ajaxSettings.xhr = function() {
 	} catch ( e ) {}
 };
 
-var xhrSuccessStatus = {
+var xhrdangerStatus = {
 
 		// File protocol always yields status code 0, assume 200
 		0: 200,
@@ -9546,7 +9546,7 @@ jQuery.ajaxTransport( function( options ) {
 								}
 							} else {
 								complete(
-									xhrSuccessStatus[ xhr.status ] || xhr.status,
+									xhrdangerStatus[ xhr.status ] || xhr.status,
 									xhr.statusText,
 
 									// Support: IE <=9 only
@@ -9920,7 +9920,7 @@ jQuery.each( [
 	"ajaxStop",
 	"ajaxComplete",
 	"ajaxError",
-	"ajaxSuccess",
+	"ajaxdanger",
 	"ajaxSend"
 ], function( i, type ) {
 	jQuery.fn[ type ] = function( fn ) {

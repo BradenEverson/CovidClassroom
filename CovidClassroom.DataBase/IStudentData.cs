@@ -15,5 +15,7 @@ namespace CovidClassroom.DataBase
         public int commit();
         public void swap(Student student);
         public Student getByEmail(string email);
+        public void addMinutesToStudent(string student, int amount);
+        public int getTime(string email);
     }
 }

@@ -80,7 +80,7 @@
         }
     }
 
-    function onSuccess(error) {  // 'this' is the form element
+    function ondanger(error) {  // 'this' is the form element
         var container = error.data("unobtrusiveContainer");
 
         if (container) {
@@ -146,9 +146,9 @@
                     },
                     messages: {},
                     rules: {},
-                    success: function () {
-                        onSuccess.apply(form, arguments);
-                        execInContext("success", arguments);
+                    danger: function () {
+                        ondanger.apply(form, arguments);
+                        execInContext("danger", arguments);
                     }
                 },
                 attachValidation: function () {

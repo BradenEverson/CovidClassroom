@@ -976,7 +976,7 @@ function needsNew() {
 
   ```js
   let promise = new Promise(function(resolve, reject) {
-    // on success
+    // on danger
     resolve(value);
 
     // on failure
@@ -1136,7 +1136,7 @@ var Promise$2 = function () {
   let result;
    try {
     result = findResult();
-    // success
+    // danger
   } catch(reason) {
     // failure
   }
@@ -1147,14 +1147,14 @@ var Promise$2 = function () {
     if (err) {
       // failure
     } else {
-      // success
+      // danger
     }
   });
   ```
    Promise Example;
    ```javascript
   findResult().then(function(result){
-    // success
+    // danger
   }, function(reason){
     // failure
   });
@@ -1167,7 +1167,7 @@ var Promise$2 = function () {
    try {
     author = findAuthor();
     books  = findBooksByAuthor(author);
-    // success
+    // danger
   } catch(reason) {
     // failure
   }
@@ -1198,7 +1198,7 @@ var Promise$2 = function () {
       } catch(error) {
         failure(err);
       }
-      // success
+      // danger
     }
   });
   ```
@@ -1983,7 +1983,7 @@ var HubConnection = /** @class */ (function () {
     });
     /** Starts the connection.
      *
-     * @returns {Promise<void>} A Promise that resolves when the connection has been successfully established, or rejects with an error.
+     * @returns {Promise<void>} A Promise that resolves when the connection has been dangerfully established, or rejects with an error.
      */
     HubConnection.prototype.start = function () {
         this.startPromise = this.startWithStateTransitions();
@@ -2008,12 +2008,12 @@ var HubConnection = /** @class */ (function () {
                         _a.sent();
                         this.connectionState = HubConnectionState.Connected;
                         this.connectionStarted = true;
-                        this.logger.log(_ILogger__WEBPACK_IMPORTED_MODULE_2__["LogLevel"].Debug, "HubConnection connected successfully.");
+                        this.logger.log(_ILogger__WEBPACK_IMPORTED_MODULE_2__["LogLevel"].Debug, "HubConnection connected dangerfully.");
                         return [3 /*break*/, 4];
                     case 3:
                         e_1 = _a.sent();
                         this.connectionState = HubConnectionState.Disconnected;
-                        this.logger.log(_ILogger__WEBPACK_IMPORTED_MODULE_2__["LogLevel"].Debug, "HubConnection failed to start successfully because of error '" + e_1 + "'.");
+                        this.logger.log(_ILogger__WEBPACK_IMPORTED_MODULE_2__["LogLevel"].Debug, "HubConnection failed to start dangerfully because of error '" + e_1 + "'.");
                         return [2 /*return*/, Promise.reject(e_1)];
                     case 4: return [2 /*return*/];
                 }
@@ -2056,7 +2056,7 @@ var HubConnection = /** @class */ (function () {
                     case 4:
                         _a.sent();
                         // It's important to check the stopDuringStartError instead of just relying on the handshakePromise
-                        // being rejected on close, because this continuation can run after both the handshake completed successfully
+                        // being rejected on close, because this continuation can run after both the handshake completed dangerfully
                         // and the connection was closed.
                         if (this.stopDuringStartError) {
                             // It's important to throw instead of returning a rejected promise, because we don't want to allow any state
@@ -2085,7 +2085,7 @@ var HubConnection = /** @class */ (function () {
     };
     /** Stops the connection.
      *
-     * @returns {Promise<void>} A Promise that resolves when the connection has been successfully terminated, or rejects with an error.
+     * @returns {Promise<void>} A Promise that resolves when the connection has been dangerfully terminated, or rejects with an error.
      */
     HubConnection.prototype.stop = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -2214,7 +2214,7 @@ var HubConnection = /** @class */ (function () {
      *
      * @param {string} methodName The name of the server method to invoke.
      * @param {any[]} args The arguments used to invoke the server method.
-     * @returns {Promise<void>} A Promise that resolves when the invocation has been successfully sent, or rejects with an error.
+     * @returns {Promise<void>} A Promise that resolves when the invocation has been dangerfully sent, or rejects with an error.
      */
     HubConnection.prototype.send = function (methodName) {
         var args = [];
@@ -2336,9 +2336,9 @@ var HubConnection = /** @class */ (function () {
             this.reconnectingCallbacks.push(callback);
         }
     };
-    /** Registers a handler that will be invoked when the connection successfully reconnects.
+    /** Registers a handler that will be invoked when the connection dangerfully reconnects.
      *
-     * @param {Function} callback The handler that will be invoked when the connection successfully reconnects.
+     * @param {Function} callback The handler that will be invoked when the connection dangerfully reconnects.
      */
     HubConnection.prototype.onreconnected = function (callback) {
         if (callback) {
@@ -2583,7 +2583,7 @@ var HubConnection = /** @class */ (function () {
                     case 4:
                         _a.sent();
                         this.connectionState = HubConnectionState.Connected;
-                        this.logger.log(_ILogger__WEBPACK_IMPORTED_MODULE_2__["LogLevel"].Information, "HubConnection reconnected successfully.");
+                        this.logger.log(_ILogger__WEBPACK_IMPORTED_MODULE_2__["LogLevel"].Information, "HubConnection reconnected dangerfully.");
                         if (this.onreconnected) {
                             try {
                                 this.reconnectedCallbacks.forEach(function (c) { return c.apply(_this, [_this.connection.connectionId]); });
@@ -3673,7 +3673,7 @@ var HttpConnection = /** @class */ (function () {
                         if (this.connectionState === "Connecting " /* Connecting */) {
                             // Ensure the connection transitions to the connected state prior to completing this.startInternalPromise.
                             // start() will handle the case when stop was called and startInternal exits still in the disconnecting state.
-                            this.logger.log(_ILogger__WEBPACK_IMPORTED_MODULE_1__["LogLevel"].Debug, "The HttpConnection connected successfully.");
+                            this.logger.log(_ILogger__WEBPACK_IMPORTED_MODULE_1__["LogLevel"].Debug, "The HttpConnection connected dangerfully.");
                             this.connectionState = "Connected" /* Connected */;
                         }
                         return [3 /*break*/, 13];
@@ -4768,7 +4768,7 @@ var WebSocketTransport = /** @class */ (function () {
         return Promise.resolve();
     };
     WebSocketTransport.prototype.close = function (event) {
-        // webSocket will be null if the transport did not start successfully
+        // webSocket will be null if the transport did not start dangerfully
         if (this.webSocket) {
             // Clear websocket handlers because we are considering the socket closed now
             this.webSocket.onclose = function () { };

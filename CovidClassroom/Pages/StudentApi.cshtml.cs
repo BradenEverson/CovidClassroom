@@ -28,7 +28,6 @@ namespace CovidClassroom
         }
         public IActionResult OnGet(string studentEmail)
         {
-            currentUser = db.Users.FirstOrDefault(r => r.Email == User.Identity.Name);
             Student student = students.getByEmail(studentEmail);
             return (student != null && student.enabled != false) ? Content(student.hourCounter.ToString()) : Content("Get out of here");
             
