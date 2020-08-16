@@ -13,7 +13,7 @@
                 <br />
                 <input type="search" class="input-group-text" placeholder="Quizlet link to your class materials" asp-for="url" style="width:75%; margin-top:3%;" />
                 <div id="searchbar" class="input-group">
-                    <input id="email" class="input-group-text" id="search" placeholder="Search a studnet's email" asp-for="studentEmail" style="width:75%; margin-top:3%;" />
+                    <input id="email" class="input-group-text" placeholder="Search a studnet's email" asp-for="studentEmail" style="width:75%; margin-top:3%;" />
                     <button onclick="SendCLientInfo('@Model.customGuid', document.getElementById('email').value)" class="btn input-group-sm btn-light" id="search" style="margin-top:3%">Find And Add To Class</button>
                 </div>
                 <button type="submit" class="btn input-group-prepend btn-outline-success">Submit the new class</button>

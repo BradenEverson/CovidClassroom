@@ -58,7 +58,7 @@ else if (!Model.isTeacher)
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">@Model.classes.getAllByStudent(Model.currentUser)[i + f].students.Count() Students enrolled</li>
                                 <li class="list-group-item">
-                                    <a asp-page="Classroom" asp-route-classId="@Model.classes.getAllByStudent(Model.currentUser)[i + f].classroomId" class="btn btn-outline-success btn-group-sm">Enter class</a>
+                                    <a class="btn btn-outline-success btn-group-sm" asp-page="./Classenvironment" asp-route-classId="@Model.classes.getAllByStudent(Model.currentUser)[i + f].classroomId">Enter class</a>
                                 </li>
                             </ul>
                         </div>
